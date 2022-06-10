@@ -1,0 +1,10 @@
+.profile__info {
+  /*column-gap: 18px;
+  display: grid;
+  grid-template-columns: 336px 24px;*/
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+}

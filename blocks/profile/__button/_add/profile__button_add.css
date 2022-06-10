@@ -1,0 +1,10 @@
+.profile__button_add {
+  width: 150px;
+  height: 50px;
+  background: url(../../../../image/Add_Button.svg);
+  cursor: pointer;
+}
+
+.profile__button_add:hover {
+  opacity: 0.6;
+}
