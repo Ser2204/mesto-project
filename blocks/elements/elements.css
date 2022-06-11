@@ -4,6 +4,14 @@
   align-content: center;
   margin: 46.25px auto 66px;
   max-width: 880px;
-  max-height: 744px;
+
   gap: 20px 17px;
+}
+
+@media screen and (max-width: 320px) {
+  .elements {
+    display: grid;
+    grid-template-columns: 1fr;
+    max-width: 282px;
+  }
 }

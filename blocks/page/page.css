@@ -10,4 +10,6 @@
   -ms-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
+  -ms-font-feature-settings: "kern" 1;
+  font-feature-settings: "kern";
 }

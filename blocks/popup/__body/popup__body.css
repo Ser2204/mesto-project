@@ -1,0 +1,5 @@
+.popup__body {
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+}
