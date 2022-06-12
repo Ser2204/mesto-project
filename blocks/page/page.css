@@ -12,4 +12,8 @@
   text-rendering: optimizeLegibility;
   -ms-font-feature-settings: "kern" 1;
   font-feature-settings: "kern";
+
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
