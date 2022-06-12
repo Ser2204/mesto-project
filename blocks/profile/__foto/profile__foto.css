@@ -4,10 +4,8 @@
   margin-right: 30px;
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 896px) {
   .profile__foto {
-    width: 120px;
-    border-radius: 50%;
     margin: 0 auto 22.25px;
   }
 }

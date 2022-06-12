@@ -8,6 +8,7 @@
   height: 19px;
   width: 22px;
   align-self: center;
+  margin-right: 15px;
 }
 
 .element__like-button:hover {

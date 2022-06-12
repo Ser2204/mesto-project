@@ -1,14 +1,19 @@
-.Profile {
+.profile {
   max-width: 880px;
-  max-height: 120px;
   margin: 40px auto 51px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 }
 
-@media screen and (max-width: 320px) {
-  .Profile {
-    max-height: 286px;
+@media screen and (max-width: 896px) {
+  .profile {
+    max-width: 68.75%;
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .profile {
     grid-template-columns: 1fr;
     margin: 42px auto 36px;
     width: calc(100% - 38px);

@@ -1,0 +1,8 @@
+.button {
+  display: inline-block;
+  border-width: initial;
+  border: 2px solid #fff;
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+}
