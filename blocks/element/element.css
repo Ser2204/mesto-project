@@ -2,7 +2,11 @@
   width: 100%;
   background-color: #ffffff;
   border-radius: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+}
+
+@media screen and (max-width: 320px) {
+  .element {
+    max-width: 282px;
+    margin: auto;
+  }
 }

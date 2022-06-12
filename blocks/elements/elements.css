@@ -1,20 +1,8 @@
 .elements {
   display: grid;
-  grid-template-columns: repeat(3, minmax(282px, 1fr));
-  align-content: center;
-  margin: 46.25px auto 66px;
+  grid-template-columns: repeat(auto-fit, minmax(282px, 1fr));
+  justify-content: center;
+  margin: auto;
   max-width: 880px;
   gap: 20px 17px;
-}
-
-@media screen and (max-width: 896px) {
-  .elements {
-    grid-template-columns: repeat(2, minmax(282px, 1fr));
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .elements {
-    grid-template-columns: minmax(282px, 1fr);
-  }
 }
