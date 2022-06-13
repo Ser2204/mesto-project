@@ -1,8 +1,7 @@
 .profile {
   max-width: 880px;
   margin: 40px auto 51px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
 }
 
 @media screen and (max-width: 896px) {
@@ -13,7 +12,7 @@
 
 @media screen and (max-width: 520px) {
   .profile {
-    grid-template-columns: 1fr;
+    flex-direction: column;
     margin: 42px auto 36px;
     width: calc(100% - 38px);
   }
