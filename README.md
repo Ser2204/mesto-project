@@ -19,6 +19,7 @@ Media Queries;
 Методология БЭМ;
 Фйловая структура Nested БЭМ;
 Вёрстка по макету в Figma.
+JavaScript
 
 **Figma**
 
