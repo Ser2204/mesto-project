@@ -5,6 +5,7 @@
   padding: 34px 36px 37px;
   border-radius: 10px;
   position: relative;
+  transition: all 0.2s linear;
 }
 
 @media screen and (max-width: 600px) {

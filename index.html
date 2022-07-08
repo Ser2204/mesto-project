@@ -24,7 +24,6 @@
             <p class="profile__subtitle">Исследователь океана</p>
           </div>
           <button type="button" class="button profile__button-edit"></button>
-          <!--  <a href="#popup_open" class="button profile__button-edit"></a> -->
         </div>
         <button
           type="button"
@@ -36,12 +35,12 @@
         <article class="element">
           <img
             class="element__image"
-            src="./image/karachaevsk.jpg"
-            alt="Карачаевск"
+            src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg"
+            alt="Архыз"
           />
-
+          <button type="button" class="element__delete-button"></button>
           <div class="element__info">
-            <h2 class="element__title">Карачаевск</h2>
+            <h2 class="element__title">Архыз</h2>
             <button type="button" class="element__like-button"></button>
           </div>
         </article>
@@ -51,7 +50,7 @@
             src="./image/Elbrus.jpg"
             alt="Гора Эльбрус"
           />
-
+          <button type="button" class="element__delete-button"></button>
           <div class="element__info">
             <h2 class="element__title">Гора Эльбрус</h2>
             <button type="button" class="element__like-button"></button>
@@ -59,7 +58,7 @@
         </article>
         <article class="element">
           <img class="element__image" src="./image/dombai.jpg" alt="Домбай" />
-
+          <button type="button" class="element__delete-button"></button>
           <div class="element__info">
             <h2 class="element__title">Домбай</h2>
             <button type="button" class="element__like-button"></button>
@@ -71,7 +70,7 @@
             src="./image/Elbrus.jpg"
             alt="Гора Эльбрус"
           />
-
+          <button type="button" class="element__delete-button"></button>
           <div class="element__info">
             <h2 class="element__title">Гора Эльбрус</h2>
             <button type="button" class="element__like-button"></button>
@@ -79,20 +78,19 @@
         </article>
         <article class="element">
           <img class="element__image" src="./image/dombai.jpg" alt="Домбай" />
-
+          <button type="button" class="element__delete-button"></button>
           <div class="element__info">
             <h2 class="element__title">Домбай</h2>
             <button type="button" class="element__like-button"></button>
           </div>
         </article>
-
         <article class="element">
           <img
             class="element__image"
             src="./image/karachaevsk.jpg"
             alt="Карачаевск"
           />
-
+          <button type="button" class="element__delete-button"></button>
           <div class="element__info">
             <h2 class="element__title">Карачаево-Черкессия</h2>
             <button type="button" class="element__like-button"></button>
@@ -103,18 +101,18 @@
     <footer class="footer">
       <p class="footer__author">&copy; 2022. Mesto Russia</p>
     </footer>
-    <div id="popup_open" class="popup">
+    <div id="editProfile" class="popup">
       <div class="popup__container">
-        <button type="button" class="popup__close"></button>
-        <!-- <a href="#profile" class="popup__close"></a> -->
-        <form class="form" name="profile_new">
-          <h2 class="popup__title">Редактировать профиль</h2>
+        <button type="button" id="closeEdit" class="popup__close"></button>
+        <form class="form" id="formEdit">
+          <p class="popup__title">Редактировать профиль</p>
           <input
             class="form__input form__input_text_heading"
             type="text"
             id="heading"
             name="heading"
             placeholder="Жак-Ив Кусто"
+            value="Жак-Ив Кусто"
             required
           />
           <input
@@ -123,11 +121,73 @@
             id="subheading"
             name="subheading"
             placeholder="Исследователь океана"
+            value="Исследователь океана"
             required
           />
-          <button type="submit" class="form__submit">Сохранить</button>
+          <button id="submitEditProfile" type="submit" class="form__submit">
+            Сохранить
+          </button>
         </form>
       </div>
     </div>
+    <div id="addCard" class="popup">
+      <div class="popup__container">
+        <button type="button" id="closeAddCard" class="popup__close"></button>
+        <form class="form" id="newCard">
+          <p class="popup__title">Новое место</p>
+          <input
+            class="form__input form__input_text_heading"
+            type="text"
+            id="nameImage"
+            name="nameImage"
+            placeholder="Название картинки"
+            value="Название"
+            required
+          />
+          <input
+            class="form__input form__input_text_subheading"
+            type="url"
+            id="linkImage"
+            name="linkImage"
+            placeholder="Ссылка на картинку"
+            value="https://pictures.. "
+            required
+          />
+          <button
+            id="submitAddCard"
+            type="submit"
+            class="form__submit"
+            disabled
+          >
+            Создать
+          </button>
+        </form>
+      </div>
+    </div>
+    <div id="lookCloser" class="popup popup_look-closer">
+      <div class="popup__container popup__container_look-closer">
+        <img
+          alt="увеличенное изображение места"
+          class="popup__look-closer-image"
+        />
+        <h2 class="popup__look-closer-name"></h2>
+        <button
+          type="button"
+          id="popup__close_look-closer"
+          class="popup__close"
+        ></button>
+      </div>
+    </div>
+    <template id="element">
+      <article class="element">
+        <img class="element__image" alt="Изображение места" />
+        <button type="button" class="element__delete-button"></button>
+        <div class="element__info">
+          <h2 class="element__title"></h2>
+          <button type="button" class="element__like-button"></button>
+        </div>
+      </article>
+    </template>
+    <script src="/pages/index.js"></script>
   </body>
 </html>
