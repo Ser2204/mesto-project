@@ -49,8 +49,8 @@ const buttonDelete = document.querySelector(".element__delete-button");
 const submitAddCard = addCardPopup.querySelector("#submitAddCard");
 const buttonCloseAdd = document.querySelector("#closeAddCard");
 const formAddCard = document.querySelector("#newCard");
-let nameImagePopup = formAddCard.querySelector("#nameImage");
-let linkImagePopup = formAddCard.querySelector("#linkImage");
+const nameImagePopup = formAddCard.querySelector("#nameImage");
+const linkImagePopup = formAddCard.querySelector("#linkImage");
 
 const elementContainer = document.querySelector(".elements"); // куда вставлять
 const elementTemplate = document.querySelector("#element").content; // содержимое шаблона
@@ -87,9 +87,9 @@ buttonCloseEdit.addEventListener("click", function () {
   closePopup(editProfilePopup); //editProfilePopup.classList.remove("popup_opened");
 });
 //закрыть попап addCard
-submitAddCard.addEventListener("click", function () {
-  closePopup(addCardPopup); //  addCardPopup.classList.remove("popup_opened");
-});
+//submitAddCard.addEventListener("click", function () {
+//  closePopup(addCardPopup); //  addCardPopup.classList.remove("popup_opened");
+//});
 buttonCloseAdd.addEventListener("click", function () {
   closePopup(addCardPopup); //editProfilePopup.classList.remove("popup_opened");
 });
