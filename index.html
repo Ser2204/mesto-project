@@ -32,6 +32,7 @@
         ></button>
       </section>
       <div class="elements">
+        <!--
         <article class="element">
           <img
             class="element__image"
@@ -96,6 +97,7 @@
             <button type="button" class="element__like-button"></button>
           </div>
         </article>
+        -->
       </div>
     </main>
     <footer class="footer">
@@ -112,7 +114,6 @@
             id="heading"
             name="heading"
             placeholder="Жак-Ив Кусто"
-            value="Жак-Ив Кусто"
             required
           />
           <input
@@ -121,7 +122,6 @@
             id="subheading"
             name="subheading"
             placeholder="Исследователь океана"
-            value="Исследователь океана"
             required
           />
           <button id="submitEditProfile" type="submit" class="form__submit">
@@ -159,8 +159,8 @@
         </form>
       </div>
     </div>
-    <div id="lookCloser" class="popup popup_look-closer">
-      <div class="popup__container popup__container_look-closer">
+    <div id="lookCloser" class="popup popup_type_look-closer">
+      <div class="popup__container popup__container_type_look-closer">
         <img
           alt="увеличенное изображение места"
           class="popup__look-closer-image"
@@ -183,6 +183,7 @@
         </div>
       </article>
     </template>
-    <script src="./pages/index.js"></script>
+    <script src="./script/cards.js"></script>
+    <script src="./script/index.js"></script>
   </body>
 </html>

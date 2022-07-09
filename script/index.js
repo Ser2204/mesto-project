@@ -1,52 +1,24 @@
-// 6 карточек из коробки
-const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
-
 // переменные profile
 const profile = document.querySelector(".profile");
 const profileInfo = profile.querySelector(".profile__info");
 const buttonEdit = profile.querySelector(".profile__button-edit");
 const buttonAdd = profile.querySelector(".profile__button-add");
 const buttonCloseEdit = document.querySelector("#closeEdit");
-const editProfilePopup = document.querySelector("#editProfile");
+const PopupEditProfile = document.querySelector("#editProfile");
 const submitEditProfile = document.querySelector("#submitEditProfile");
 
 // Находим переменные для обновления Имени и Рода занятий
 const formEdit = document.querySelector("#formEdit");
-const submit = document.querySelector(".form__submit");
-let nameInput = formEdit.querySelector("#heading");
-let jobInput = formEdit.querySelector("#subheading");
-let nameTitle = profile.querySelector(".profile__title");
-let jobTitle = profile.querySelector(".profile__subtitle");
+//const submit = document.querySelector("#submitEditProfile");
+const nameInput = formEdit.querySelector("#heading");
+const jobInput = formEdit.querySelector("#subheading");
+const nameTitle = profile.querySelector(".profile__title");
+const jobTitle = profile.querySelector(".profile__subtitle");
 
 // переменные addCard
-const addCardPopup = document.querySelector("#addCard");
+const PopupAddCard = document.querySelector("#addCard");
 const buttonDelete = document.querySelector(".element__delete-button");
-const submitAddCard = addCardPopup.querySelector("#submitAddCard");
+//const submitAddCard = PopupAddCard.querySelector("#submitAddCard");
 const buttonCloseAdd = document.querySelector("#closeAddCard");
 const formAddCard = document.querySelector("#newCard");
 const nameImagePopup = formAddCard.querySelector("#nameImage");
@@ -56,11 +28,19 @@ const elementContainer = document.querySelector(".elements"); // куда вст
 const elementTemplate = document.querySelector("#element").content; // содержимое шаблона
 
 // popup look-closer
-const lookCloser = document.querySelector(".popup_look-closer");
-const buttonLookCloser = lookCloser.querySelector(".popup__close_look-closer");
-const lookCloserImage = lookCloser.querySelector(".popup__look-closer-image");
-const lookCloserName = lookCloser.querySelector(".popup__look-closer-name");
-const buttonCloseLook = lookCloser.querySelector("#popup__close_look-closer");
+const PopupLookCloser = document.querySelector(".popup_type_look-closer");
+const buttonLookCloser = PopupLookCloser.querySelector(
+  ".popup__close_look-closer"
+);
+const ImageLookCloser = PopupLookCloser.querySelector(
+  ".popup__look-closer-image"
+);
+const NameLookCloser = PopupLookCloser.querySelector(
+  ".popup__look-closer-name"
+);
+const buttonCloseLook = PopupLookCloser.querySelector(
+  "#popup__close_look-closer"
+);
 
 // !! функции popup
 function openPopup(popup) {
@@ -72,49 +52,51 @@ function closePopup(popup) {
 
 // !!. действия по кликам
 // открыть попап
-buttonEdit.addEventListener("click", function () {
-  openPopup(editProfilePopup); //editProfilePopup.classList.add("popup_opened");
-});
+buttonEdit.addEventListener("click", editInput);
+//function () {
+//  openPopup(PopupEditProfile); //PopupEditProfile.classList.add("popup_opened");
+//});
 buttonAdd.addEventListener("click", function () {
-  openPopup(addCardPopup); //addCardPopup.classList.add("popup_opened");
+  openPopup(PopupAddCard); //PopupAddCard.classList.add("popup_opened");
 });
 
 // закрыть попап editProfile
 //submitEditProfile.addEventListener("click", function () {
-//  closePopup(editProfilePopup); //editProfilePopup.classList.remove("popup_opened");
+//  closePopup(PopupEditProfile); //PopupEditProfile.classList.remove("popup_opened");
 //});
 buttonCloseEdit.addEventListener("click", function () {
-  closePopup(editProfilePopup); //editProfilePopup.classList.remove("popup_opened");
+  closePopup(PopupEditProfile); //PopupEditProfile.classList.remove("popup_opened");
 });
 //закрыть попап addCard
 //submitAddCard.addEventListener("click", function () {
-//  closePopup(addCardPopup); //  addCardPopup.classList.remove("popup_opened");
+//  closePopup(PopupAddCard); //  PopupAddCard.classList.remove("popup_opened");
 //});
 buttonCloseAdd.addEventListener("click", function () {
-  closePopup(addCardPopup); //editProfilePopup.classList.remove("popup_opened");
+  closePopup(PopupAddCard); //PopupEditProfile.classList.remove("popup_opened");
 });
 //закрыть попап lookCloser
 buttonCloseLook.addEventListener("click", function () {
-  closePopup(lookCloser);
+  closePopup(PopupLookCloser);
 });
 
 // 1 скрипт редактирования имени и рода занятий
 // Получите значение полей jobInput и nameInput из свойства value
 function editInput() {
-  nameInput.value = nameInput.textContent;
-  jobInput.value = jobInput.textContent;
+  nameInput.value = nameTitle.textContent;
+  jobInput.value = jobTitle.textContent;
+  openPopup(PopupEditProfile);
 }
 // Обработчик «отправки» формы
-function formSubmitHandler(evt) {
+function saveEditInput(evt) {
   evt.preventDefault();
   // Вставьте новые значения с помощью textContent
   nameTitle.textContent = nameInput.value;
   jobTitle.textContent = jobInput.value;
 
-  closePopup(editProfilePopup);
+  closePopup(PopupEditProfile);
 }
 // Прикрепляем обработчик к форме
-formEdit.addEventListener("submit", formSubmitHandler);
+formEdit.addEventListener("submit", saveEditInput);
 
 // 5 скрипт переключатель нравится / не нравится
 function likeElement(evt) {
@@ -141,11 +123,11 @@ function createCard(nameCard, linkCard) {
 
   // 7 открытие попапа с картинкой
   elementImage.addEventListener("click", function () {
-    lookCloserImage.src = linkCard;
-    lookCloserImage.alt = nameCard;
-    lookCloserName.textContent = nameCard;
+    ImageLookCloser.src = linkCard;
+    ImageLookCloser.alt = nameCard;
+    NameLookCloser.textContent = nameCard;
 
-    openPopup(lookCloser);
+    openPopup(PopupLookCloser);
   });
 
   newElement
@@ -169,7 +151,7 @@ function addNewCard(evt) {
   evt.preventDefault();
   renderElement(nameImagePopup.value, linkImagePopup.value);
   formAddCard.reset();
-  closePopup(addCardPopup);
+  closePopup(PopupAddCard);
 }
 
 console.log(linkImagePopup.value);
