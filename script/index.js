@@ -4,8 +4,8 @@ const profileInfo = profile.querySelector(".profile__info");
 const buttonEdit = profile.querySelector(".profile__button-edit");
 const buttonAdd = profile.querySelector(".profile__button-add");
 const buttonCloseEdit = document.querySelector("#closeEdit");
-const PopupEditProfile = document.querySelector("#editProfile");
-const submitEditProfile = document.querySelector("#submitEditProfile");
+const popupEditProfile = document.querySelector("#editProfile");
+//const submitEditProfile = document.querySelector("#submitEditProfile");
 
 // Находим переменные для обновления Имени и Рода занятий
 const formEdit = document.querySelector("#formEdit");
@@ -16,9 +16,9 @@ const nameTitle = profile.querySelector(".profile__title");
 const jobTitle = profile.querySelector(".profile__subtitle");
 
 // переменные addCard
-const PopupAddCard = document.querySelector("#addCard");
+const popupAddCard = document.querySelector("#addCard");
 const buttonDelete = document.querySelector(".element__delete-button");
-//const submitAddCard = PopupAddCard.querySelector("#submitAddCard");
+//const submitAddCard = popupAddCard.querySelector("#submitAddCard");
 const buttonCloseAdd = document.querySelector("#closeAddCard");
 const formAddCard = document.querySelector("#newCard");
 const nameImagePopup = formAddCard.querySelector("#nameImage");
@@ -28,17 +28,17 @@ const elementContainer = document.querySelector(".elements"); // куда вст
 const elementTemplate = document.querySelector("#element").content; // содержимое шаблона
 
 // popup look-closer
-const PopupLookCloser = document.querySelector(".popup_type_look-closer");
-const buttonLookCloser = PopupLookCloser.querySelector(
+const popupLookCloser = document.querySelector(".popup_type_look-closer");
+const buttonLookCloser = popupLookCloser.querySelector(
   ".popup__close_look-closer"
 );
-const ImageLookCloser = PopupLookCloser.querySelector(
+const ImageLookCloser = popupLookCloser.querySelector(
   ".popup__look-closer-image"
 );
-const NameLookCloser = PopupLookCloser.querySelector(
+const NameLookCloser = popupLookCloser.querySelector(
   ".popup__look-closer-name"
 );
-const buttonCloseLook = PopupLookCloser.querySelector(
+const buttonCloseLook = popupLookCloser.querySelector(
   "#popup__close_look-closer"
 );
 
@@ -54,29 +54,29 @@ function closePopup(popup) {
 // открыть попап
 buttonEdit.addEventListener("click", editInput);
 //function () {
-//  openPopup(PopupEditProfile); //PopupEditProfile.classList.add("popup_opened");
+//  openPopup(popupEditProfile); //popupEditProfile.classList.add("popup_opened");
 //});
 buttonAdd.addEventListener("click", function () {
-  openPopup(PopupAddCard); //PopupAddCard.classList.add("popup_opened");
+  openPopup(popupAddCard); //popupAddCard.classList.add("popup_opened");
 });
 
 // закрыть попап editProfile
 //submitEditProfile.addEventListener("click", function () {
-//  closePopup(PopupEditProfile); //PopupEditProfile.classList.remove("popup_opened");
+//  closePopup(popupEditProfile); //popupEditProfile.classList.remove("popup_opened");
 //});
 buttonCloseEdit.addEventListener("click", function () {
-  closePopup(PopupEditProfile); //PopupEditProfile.classList.remove("popup_opened");
+  closePopup(popupEditProfile); //popupEditProfile.classList.remove("popup_opened");
 });
 //закрыть попап addCard
 //submitAddCard.addEventListener("click", function () {
-//  closePopup(PopupAddCard); //  PopupAddCard.classList.remove("popup_opened");
+//  closePopup(popupAddCard); //  popupAddCard.classList.remove("popup_opened");
 //});
 buttonCloseAdd.addEventListener("click", function () {
-  closePopup(PopupAddCard); //PopupEditProfile.classList.remove("popup_opened");
+  closePopup(popupAddCard); //popupEditProfile.classList.remove("popup_opened");
 });
 //закрыть попап lookCloser
 buttonCloseLook.addEventListener("click", function () {
-  closePopup(PopupLookCloser);
+  closePopup(popupLookCloser);
 });
 
 // 1 скрипт редактирования имени и рода занятий
@@ -84,7 +84,7 @@ buttonCloseLook.addEventListener("click", function () {
 function editInput() {
   nameInput.value = nameTitle.textContent;
   jobInput.value = jobTitle.textContent;
-  openPopup(PopupEditProfile);
+  openPopup(popupEditProfile);
 }
 // Обработчик «отправки» формы
 function saveEditInput(evt) {
@@ -93,7 +93,7 @@ function saveEditInput(evt) {
   nameTitle.textContent = nameInput.value;
   jobTitle.textContent = jobInput.value;
 
-  closePopup(PopupEditProfile);
+  closePopup(popupEditProfile);
 }
 // Прикрепляем обработчик к форме
 formEdit.addEventListener("submit", saveEditInput);
@@ -127,7 +127,7 @@ function createCard(nameCard, linkCard) {
     ImageLookCloser.alt = nameCard;
     NameLookCloser.textContent = nameCard;
 
-    openPopup(PopupLookCloser);
+    openPopup(popupLookCloser);
   });
 
   newElement
@@ -151,7 +151,7 @@ function addNewCard(evt) {
   evt.preventDefault();
   renderElement(nameImagePopup.value, linkImagePopup.value);
   formAddCard.reset();
-  closePopup(PopupAddCard);
+  closePopup(popupAddCard);
 }
 
 console.log(linkImagePopup.value);
