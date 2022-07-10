@@ -32,10 +32,10 @@ const popupLookCloser = document.querySelector(".popup_type_look-closer");
 const buttonLookCloser = popupLookCloser.querySelector(
   ".popup__close_look-closer"
 );
-const ImageLookCloser = popupLookCloser.querySelector(
+const imageLookCloser = popupLookCloser.querySelector(
   ".popup__look-closer-image"
 );
-const NameLookCloser = popupLookCloser.querySelector(
+const nameLookCloser = popupLookCloser.querySelector(
   ".popup__look-closer-name"
 );
 const buttonCloseLook = popupLookCloser.querySelector(
@@ -123,9 +123,9 @@ function createCard(nameCard, linkCard) {
 
   // 7 открытие попапа с картинкой
   elementImage.addEventListener("click", function () {
-    ImageLookCloser.src = linkCard;
-    ImageLookCloser.alt = nameCard;
-    NameLookCloser.textContent = nameCard;
+    imageLookCloser.src = linkCard;
+    imageLookCloser.alt = nameCard;
+    nameLookCloser.textContent = nameCard;
 
     openPopup(popupLookCloser);
   });
