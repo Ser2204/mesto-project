@@ -20,6 +20,9 @@ Media Queries;
 Фйловая структура Nested БЭМ;
 Вёрстка по макету в Figma.
 JavaScript
+Валидация полей ввода
+Webpack
+Реализована модульность
 
 **Figma**
 
