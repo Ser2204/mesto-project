@@ -1,42 +1,4 @@
-import "./pages/index.css";
-import {
-  buttonEdit,
-  buttonAvatar,
-  buttonAdd,
-  popupEditProfile,
-  formEdit,
-  nameInput,
-  jobInput,
-  nameTitle,
-  jobTitle,
-  popupAddCard,
-  formAddCard,
-  nameImagePopup,
-  linkImagePopup,
-  elementContainer,
-  elementTemplate,
-  buttonSubmitChangeAvatar,
-  popupLookCloser,
-  imageLookCloser,
-  nameLookCloser,
-  popupChangeAvatar,
-  formChangeAvatar,
-  linkChangeAvatar,
-} from "./components/utils";
-
-import { initialCards } from "./components/cards";
-
-import {
-  openPopup,
-  closePopup,
-  disableSubmitButton,
-  enableSubmitButton,
-} from "./components/modal";
-
-import { enableValidation } from "./components/validate";
-
-import { editProfileFoto, editInput, saveEditInput } from "./components/user";
-
+import "./index.css";
 import {
   getUserInfoFromServer,
   postUserInfoToServer,
@@ -47,105 +9,48 @@ import {
   deleteLikeFromCard,
   changeUserAvatarOnServer,
 } from "./scripts/api";
+import {
+  renderUserInfo,
+  renderUserAvatar,
+  getUserInfoFromPage,
+} from "./scripts/userInfo";
+import {
+  deleteCardElement,
+  isCardLikedByUser,
+  changeLikeStatus,
+  isCardLikeButtonActive,
+  createCard,
+} from "./scripts/card";
+import {
+  disableSubmitButton,
+  enableSubmitButton,
+  openPopup,
+  closePopup,
+} from "./scripts/modal";
+import { enableValidation } from "./scripts/validation";
+import {
+  popupChangeAvatar,
+  popupEditProfile,
+  popupAddCard,
+  popupViewCard,
+  formEditProfile,
+  formChangeAvatar,
+  formAddCard,
+  buttonOpenEditProfile,
+  buttonOpenChangeAvatar,
+  buttonOpenAddCard,
+  buttonSubmitEditProfile,
+  buttonSubmitChangeAvatar,
+  buttonSubmitAddCard,
+  inputUserName,
+  inputUserDescription,
+  inputAvatarLink,
+  inputPlaceName,
+  inputPlaceLink,
+  placeNameViewCard,
+  imageViewCard,
+} from "./scripts/utils";
 
-buttonAvatar.addEventListener("click", () => {
-  formChangeAvatar.reset();
-  disableSubmitButton(buttonSubmitChangeAvatar);
-  openPopup(popupChangeAvatar);
-});
-
-formChangeAvatar.addEventListener("submit", () => {
-  editProfileFoto(linkChangeAvatar.value);
-  closePopup(popupChangeAvatar);
-});
-
-// Получите значение полей jobInput и nameInput из свойства value
-//function editInput() {
-//  nameInput.value = nameTitle.textContent;
-//  jobInput.value = jobTitle.textContent;
-//  openPopup(popupEditProfile);}
-
-// Обработчик «отправки» формы
-//function saveEditInput(evt) {
-//  evt.preventDefault();
-// Вставьте новые значения с помощью textContent
-//  nameTitle.textContent = nameInput.value;
-//  jobTitle.textContent = jobInput.value;
-//  closePopup(popupEditProfile);}
-
-// 1 скрипт редактирования имени и рода занятий
-buttonEdit.addEventListener("click", editInput);
-
-// Прикрепляем обработчик к форме
-formEdit.addEventListener("submit", saveEditInput);
-
-// 5 скрипт переключатель нравится / не нравится
-function likeElement(evt) {
-  evt.target.classList.toggle("element__like-button_active");
-}
-
-// 6 удаление карточки
-function deleteElement(evt) {
-  evt.target.closest(".element").remove();
-}
-
-// добавим 6 мест при загрузке страницы
-initialCards.forEach(function (card) {
-  renderElement(card.name, card.link);
-});
-
-buttonAdd.addEventListener("click", function () {
-  openPopup(popupAddCard);
-});
-//добавить место, на входе данные из массива или с формы
-function createCard(nameCard, linkCard) {
-  const newElement = elementTemplate.cloneNode(true);
-  const elementImage = newElement.querySelector(".element__image");
-  newElement.querySelector(".element__title").textContent = nameCard;
-  elementImage.src = linkCard;
-  elementImage.alt = nameCard;
-  //открытие попапа с картинкой
-  elementImage.addEventListener("click", function () {
-    imageLookCloser.src = linkCard;
-    imageLookCloser.alt = nameCard;
-    nameLookCloser.textContent = nameCard;
-    openPopup(popupLookCloser);
-  });
-  newElement
-    .querySelector(".element__like-button")
-    .addEventListener("click", likeElement);
-  newElement
-    .querySelector(".element__delete-button")
-    .addEventListener("click", deleteElement);
-  return newElement;
-}
-
-// опубликовать новую карточку
-function renderElement(nameCard, linkCard) {
-  const element = createCard(nameCard, linkCard);
-  elementContainer.prepend(element);
-}
-
-// добавить место по данным формы
-function addNewCard(evt) {
-  evt.preventDefault();
-  renderElement(nameImagePopup.value, linkImagePopup.value);
-  formAddCard.reset();
-  closePopup(popupAddCard);
-}
-
-formAddCard.addEventListener("submit", addNewCard);
-
-enableValidation({
-  formSelector: ".form",
-  inputSelector: ".form__input",
-  submitButtonSelector: ".form__submit",
-  inactiveButtonClass: "form__submit_disabled",
-  inputErrorClass: "form__input_type_error",
-  errorClass: "form__input-error_active",
-});
-
-/////заготовки кода
 let userID = "";
 const cardsArray = [];
 
@@ -179,6 +84,15 @@ function renderCards(cardsArray) {
 }
 
 window.addEventListener("DOMContentLoaded", renderPage);
+
+enableValidation({
+  formSelector: ".form",
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__save-button",
+  inactiveButtonClass: "popup__save-button_disabled",
+  inputErrorClass: "popup__input_type_error",
+  errorClass: "popup__input-error_active",
+});
 
 const popups = Array.from(document.querySelectorAll(".popup"));
 popups.forEach((popup) => {

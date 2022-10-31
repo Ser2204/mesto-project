@@ -1,6 +1,7 @@
 // переменные profile
 export const profile = document.querySelector(".profile");
 export const profileInfo = profile.querySelector(".profile__info");
+export const profileFoto = document.querySelector(".profile__foto");
 export const buttonEdit = profile.querySelector(".profile__button-edit");
 export const buttonAvatar = profile.querySelector(".profile__avatar-layout");
 export const buttonAdd = profile.querySelector(".profile__button-add");
@@ -55,4 +56,13 @@ export const popupChangeAvatar = document.querySelector("#changeAvatar");
 export const buttonCloseAvatar = document.querySelector("#closeChangeAvatar");
 export const formChangeAvatar = document.querySelector("#formChangeAvatar");
 export const linkChangeAvatar = document.querySelector("#avatarLinkInput");
-export const elementUserAvatar = document.querySelector(".profile__foto");
+
+export const containerCards = document.querySelector(".elements");
+export const templateCard = document.querySelector("#element").content;
+export const popupViewCard = document.querySelector(".popup_type_look-closer");
+export const imageViewCard = popupViewCard.querySelector(
+  ".popup__look-closer-image"
+);
+export const placeNameViewCard = popupViewCard.querySelector(
+  ".popup__look-closer-name"
+);
