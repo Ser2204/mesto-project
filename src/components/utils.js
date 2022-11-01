@@ -22,9 +22,6 @@ export const formAddCard = document.querySelector("#newCard");
 export const nameImagePopup = formAddCard.querySelector("#nameImage");
 export const linkImagePopup = formAddCard.querySelector("#linkImage");
 
-export const elementContainer = document.querySelector(".elements"); // куда вставлять
-export const elementTemplate = document.querySelector("#element").content; // содержимое шаблона
-
 // submit
 export const buttonSubmitChangeAvatar = document.querySelector(
   "#submitChangeAvatar"
@@ -33,12 +30,20 @@ export const buttonSubmitAddCard = document.querySelector("#submitAddCard");
 export const buttonSubmitEditProfile =
   document.querySelector("#submitEditProfile");
 
+// popup изменить аватар
+export const popupChangeAvatar = document.querySelector("#changeAvatar");
+export const buttonCloseAvatar = document.querySelector("#closeChangeAvatar");
+export const formChangeAvatar = document.querySelector("#formChangeAvatar");
+export const linkChangeAvatar = document.querySelector("#avatarLinkInput");
+export const elementUserAvatar = document.querySelector(".profile__foto");
+
+// создать карточки изображений
+export const elementContainer = document.querySelector(".elements"); // куда вставлять
+export const elementTemplate = document.querySelector("#element").content; // содержимое шаблона
+
 // popup look-closer
 export const popupLookCloser = document.querySelector(
   ".popup_type_look-closer"
-);
-export const buttonLookCloser = popupLookCloser.querySelector(
-  ".popup__close_look-closer"
 );
 export const imageLookCloser = popupLookCloser.querySelector(
   ".popup__look-closer-image"
@@ -46,13 +51,9 @@ export const imageLookCloser = popupLookCloser.querySelector(
 export const nameLookCloser = popupLookCloser.querySelector(
   ".popup__look-closer-name"
 );
+export const buttonLookCloser = popupLookCloser.querySelector(
+  ".popup__close_look-closer"
+);
 export const buttonCloseLook = popupLookCloser.querySelector(
   "#popup__close_look-closer"
 );
-
-// popup изменить аватар
-export const popupChangeAvatar = document.querySelector("#changeAvatar");
-export const buttonCloseAvatar = document.querySelector("#closeChangeAvatar");
-export const formChangeAvatar = document.querySelector("#formChangeAvatar");
-export const linkChangeAvatar = document.querySelector("#avatarLinkInput");
-export const elementUserAvatar = document.querySelector(".profile__foto");

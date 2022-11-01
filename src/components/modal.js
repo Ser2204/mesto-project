@@ -7,36 +7,24 @@ popups.forEach((popup) => {
   });
 });
 
-let openedPopup;
-
 export function openPopup(popup) {
   popup.classList.add("popup_opened");
-  openedPopup = popup;
   document.addEventListener("keydown", closeEscape);
   popup.addEventListener("click", closeOverlay);
 }
 export function closePopup(popup) {
   popup.classList.remove("popup_opened");
   document.removeEventListener("keydown", closeEscape);
-  openedPopup.removeEventListener("click", closeOverlay);
+  popup.removeEventListener("click", closeOverlay);
 }
 function closeEscape(evt) {
   if (evt.key === "Escape") {
+    const openedPopup = document.querySelector(".popup_opened");
     closePopup(openedPopup);
   }
 }
 function closeOverlay(evt) {
-  if (evt.target === openedPopup.querySelector(".popup__overlay")) {
-    closePopup(openedPopup);
-    openedPopup = null;
+  if (evt.target.classList.contains("popup__overlay")) {
+    closePopup(evt.currentTarget);
   }
-}
-
-export function disableSubmitButton(submitForm) {
-  submitForm.setAttribute("disabled", "");
-  submitForm.classList.add("popup__save-button_disabled");
-}
-export function enableSubmitButton(submitForm) {
-  submitForm.removeAttribute("disabled");
-  submitForm.classList.remove("popup__save-button_disabled");
 }

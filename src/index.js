@@ -25,31 +25,31 @@ import {
   elementUserAvatar,
 } from "./components/utils";
 
-import { initialCards } from "./components/card";
+import { initialCards } from "./components/cards";
+
+import { openPopup, closePopup } from "./components/modal";
 
 import {
-  openPopup,
-  closePopup,
+  enableValidation,
   disableSubmitButton,
   enableSubmitButton,
-} from "./components/modal";
+} from "./components/validate";
 
-import { enableValidation } from "./components/validate";
+import {
+  addNewCard,
+  //renderElement,
+  //likeElement,
+  //deleteElement,
+  createCard,
+  //viewCard,
+} from "./components/card";
 
-function renderUserAvatar(avatar) {
-  elementUserAvatar.style.backgroundImage = `url(${avatar})`;
-}
+//import {  deleteCardElement,  isCardLikedByUser,  changeLikeStatus,   isCardLikeButtonActive,  createCard,} from "./scripts/card";
 
-buttonAvatar.addEventListener("click", () => {
-  formChangeAvatar.reset();
-  disableSubmitButton(buttonSubmitChangeAvatar);
-  openPopup(popupChangeAvatar);
-});
-
-formChangeAvatar.addEventListener("submit", () => {
-  renderUserAvatar(linkChangeAvatar.value);
-  closePopup(popupChangeAvatar);
-});
+// функция обновления фото пользователя
+//function renderUserAvatar(avatar) {elementUserAvatar.style.backgroundImage = `url(${avatar})`; }
+//buttonAvatar.addEventListener("click", () => {formChangeAvatar.reset(); disableSubmitButton(buttonSubmitChangeAvatar);   openPopup(popupChangeAvatar);});
+//formChangeAvatar.addEventListener("submit", () => {renderUserAvatar(linkChangeAvatar.value);  closePopup(popupChangeAvatar); });
 
 // 1 скрипт редактирования имени и рода занятий
 buttonEdit.addEventListener("click", editInput);
@@ -59,7 +59,6 @@ function editInput() {
   jobInput.value = jobTitle.textContent;
   openPopup(popupEditProfile);
 }
-
 // Обработчик «отправки» формы
 function saveEditInput(evt) {
   evt.preventDefault();
@@ -71,16 +70,6 @@ function saveEditInput(evt) {
 // Прикрепляем обработчик к форме
 formEdit.addEventListener("submit", saveEditInput);
 
-// 5 скрипт переключатель нравится / не нравится
-function likeElement(evt) {
-  evt.target.classList.toggle("element__like-button_active");
-}
-
-// 6 удаление карточки
-function deleteElement(evt) {
-  evt.target.closest(".element").remove();
-}
-
 // добавим 6 мест при загрузке страницы
 initialCards.forEach(function (card) {
   renderElement(card.name, card.link);
@@ -90,43 +79,25 @@ buttonAdd.addEventListener("click", function () {
   openPopup(popupAddCard);
 });
 //добавить место, на входе данные из массива или с формы
-function createCard(nameCard, linkCard) {
-  const newElement = elementTemplate.cloneNode(true);
-  const elementImage = newElement.querySelector(".element__image");
-  newElement.querySelector(".element__title").textContent = nameCard;
-  elementImage.src = linkCard;
-  elementImage.alt = nameCard;
-  //открытие попапа с картинкой
-  elementImage.addEventListener("click", function () {
-    imageLookCloser.src = linkCard;
-    imageLookCloser.alt = nameCard;
-    nameLookCloser.textContent = nameCard;
-    openPopup(popupLookCloser);
-  });
-  newElement
-    .querySelector(".element__like-button")
-    .addEventListener("click", likeElement);
-  newElement
-    .querySelector(".element__delete-button")
-    .addEventListener("click", deleteElement);
-  return newElement;
-}
+//function createCard(nameCard, linkCard) {  const newElement = elementTemplate.cloneNode(true);  const elementImage = newElement.querySelector(".element__image");  newElement.querySelector(".element__title").textContent = nameCard;  elementImage.src = linkCard;  elementImage.alt = nameCard;    elementImage.addEventListener("click", function () {    imageLookCloser.src = linkCard;    imageLookCloser.alt = nameCard;    nameLookCloser.textContent = nameCard;    openPopup(popupLookCloser);  });  newElement    .querySelector(".element__like-button")    .addEventListener("click", likeElement);  newElement    .querySelector(".element__delete-button")    .addEventListener("click", deleteElement);  return newElement;}
+// 5 скрипт переключатель нравится / не нравится
+//function likeElement(evt) {  evt.target.classList.toggle("element__like-button_active"); }
 
+// 6 удаление карточки
+//function deleteElement(evt) {   evt.target.closest(".element").remove(); }
 // опубликовать новую карточку
+//function renderElement(nameCard, linkCard) {  const element = createCard(nameCard, linkCard);   elementContainer.prepend(element); }
+
+// добавить место по данным формы
+//function addNewCard(evt) {  evt.preventDefault();  renderElement(nameImagePopup.value, linkImagePopup.value);  formAddCard.reset();   closePopup(popupAddCard); }
+//likeButtonElement.addEventListener("click", likeElement);
+//deleteButtonElement.addEventListener("click", deleteElement);
+formAddCard.addEventListener("submit", addNewCard);
+
 function renderElement(nameCard, linkCard) {
   const element = createCard(nameCard, linkCard);
   elementContainer.prepend(element);
 }
-
-// добавить место по данным формы
-function addNewCard(evt) {
-  evt.preventDefault();
-  renderElement(nameImagePopup.value, linkImagePopup.value);
-  formAddCard.reset();
-  closePopup(popupAddCard);
-}
-
-formAddCard.addEventListener("submit", addNewCard);
 
 enableValidation({
   formSelector: ".form",
