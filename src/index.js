@@ -24,6 +24,7 @@ import {
   linkChangeAvatar,
   elementUserAvatar,
   buttonSubmitAddCard,
+  buttonSubmitEditProfile,
 } from "./components/utils";
 
 import { initialCards } from "./components/cards";
@@ -59,6 +60,7 @@ function editInput() {
   nameInput.value = nameTitle.textContent;
   jobInput.value = jobTitle.textContent;
   openPopup(popupEditProfile);
+  disableSubmitButton(buttonSubmitEditProfile);
 }
 // Обработчик «отправки» формы
 function saveEditInput(evt) {
