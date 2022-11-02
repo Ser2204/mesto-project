@@ -23,6 +23,7 @@ import {
   formChangeAvatar,
   linkChangeAvatar,
   elementUserAvatar,
+  buttonSubmitAddCard,
 } from "./components/utils";
 
 import { initialCards } from "./components/cards";
@@ -76,6 +77,8 @@ initialCards.forEach(function (card) {
 });
 
 buttonAdd.addEventListener("click", function () {
+  formAddCard.reset();
+  disableSubmitButton(buttonSubmitAddCard);
   openPopup(popupAddCard);
 });
 //добавить место, на входе данные из массива или с формы

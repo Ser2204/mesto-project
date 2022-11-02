@@ -1,10 +1,10 @@
 export function disableSubmitButton(submitForm) {
   submitForm.setAttribute("disabled", "");
-  submitForm.classList.add("popup__save-button_disabled");
+  submitForm.classList.add("form__submit_disabled");
 }
 export function enableSubmitButton(submitForm) {
   submitForm.removeAttribute("disabled");
-  submitForm.classList.remove("popup__save-button_disabled");
+  submitForm.classList.remove("form__submit_disabled");
 }
 
 const isValid = (formElement, inputElement, inputErrorClass, errorClass) => {
