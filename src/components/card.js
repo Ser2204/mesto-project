@@ -29,14 +29,12 @@ export function createCard(nameCard, linkCard) {
     nameLookCloser.textContent = nameCard;
     openPopup(popupLookCloser);
   });
-  elementContainer.prepend(newElement);
   likeButtonElement.addEventListener("click", likeElement);
   deleteButtonElement.addEventListener("click", deleteElement);
 
   return newElement;
 }
 
-//export function deleteElement(newElement) {  newElement.closest(".element").remove();}
 // 5 скрипт переключатель нравится / не нравится
 function deleteElement(evt) {
   evt.target.closest(".element").remove();
@@ -49,12 +47,4 @@ function likeElement(evt) {
 export function renderElement(nameCard, linkCard) {
   const element = createCard(nameCard, linkCard);
   elementContainer.prepend(element);
-}
-
-// добавить место по данным формы
-export function addNewCard(evt) {
-  evt.preventDefault();
-  renderElement(nameImagePopup.value, linkImagePopup.value);
-  formAddCard.reset();
-  closePopup(popupAddCard);
 }
