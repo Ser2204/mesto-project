@@ -57,7 +57,7 @@ function editInput() {
   nameInput.value = nameTitle.textContent;
   jobInput.value = jobTitle.textContent;
   openPopup(popupEditProfile);
-  enableValidation, (nameInput, jobInput);
+  enableValidation(nameInput, jobInput);
   disableSubmitButton(buttonSubmitEditProfile);
 }
 // Обработчик «отправки» формы
