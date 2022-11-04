@@ -4,17 +4,15 @@ import {
   imageLookCloser,
   nameLookCloser,
   popupLookCloser,
-  nameImagePopup,
-  linkImagePopup,
-  formAddCard,
-  popupAddCard,
 } from "./utils";
 import { openPopup, closePopup } from "./modal";
 
 export function createCard(nameCard, linkCard) {
   const newElement = elementTemplate.cloneNode(true);
   const imageElement = newElement.querySelector(".element__image");
-  //const likesCounterElement = newElement.querySelector(".element__like-counter");
+  const likesCounterElement = newElement.querySelector(
+    ".element__like-counter"
+  );
   const deleteButtonElement = newElement.querySelector(
     ".element__delete-button"
   );

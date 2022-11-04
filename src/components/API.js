@@ -13,13 +13,13 @@ function checkResponse(res) {
   Promise.reject(`Ошибка: ${res.status}`);
 }
 
-export function getCardsFromServer() {
+export function getElementServer() {
   return fetch(config.baseUrl + "/cards", {
     headers: config.headers,
   }).then((res) => checkResponse(res));
 }
 
-export function postNewCardToServer(name, link) {
+export function postNewElementServer(name, link) {
   return fetch(config.baseUrl + "/cards", {
     method: "POST",
     headers: config.headers,
@@ -30,21 +30,21 @@ export function postNewCardToServer(name, link) {
   }).then((res) => checkResponse(res));
 }
 
-export function deleteCardFromServer(cardID) {
+export function deleteElementServer(cardID) {
   return fetch(config.baseUrl + `/cards/${cardID}`, {
     method: "DELETE",
     headers: config.headers,
   }).then((res) => checkResponse(res));
 }
 
-export function getUserInfoFromServer() {
+export function getUserInfoServer() {
   return fetch(config.baseUrl + "/users/me", {
     method: "get",
     headers: config.headers,
   }).then((res) => checkResponse(res));
 }
 
-export function postUserInfoToServer(name, about) {
+export function postUserInfoServer(name, about) {
   return fetch(config.baseUrl + "/users/me", {
     method: "PATCH",
     headers: config.headers,
@@ -55,7 +55,7 @@ export function postUserInfoToServer(name, about) {
   }).then((res) => checkResponse(res));
 }
 
-export function changeUserAvatarOnServer(link) {
+export function changeUserAvatarServer(link) {
   return fetch(config.baseUrl + "/users/me/avatar", {
     method: "PATCH",
     headers: config.headers,
@@ -65,14 +65,14 @@ export function changeUserAvatarOnServer(link) {
   }).then((res) => checkResponse(res));
 }
 
-export function putLikeOnCard(cardID) {
+export function putLikeElement(cardID) {
   return fetch(config.baseUrl + `/cards/likes/${cardID}`, {
     method: "PUT",
     headers: config.headers,
   }).then((res) => checkResponse(res));
 }
 
-export function deleteLikeFromCard(cardID) {
+export function deleteLikeElement(cardID) {
   return fetch(config.baseUrl + `/cards/likes/${cardID}`, {
     method: "DELETE",
     headers: config.headers,

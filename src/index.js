@@ -45,10 +45,22 @@ import {
   //viewCard,
 } from "./components/card";
 
+let userID = "";
+const cardsArray = [];
+
 // функция обновления фото пользователя
-//function renderUserAvatar(avatar) {elementUserAvatar.style.backgroundImage = `url(${avatar})`; }
-//buttonAvatar.addEventListener("click", () => {formChangeAvatar.reset(); disableSubmitButton(buttonSubmitChangeAvatar);   openPopup(popupChangeAvatar);});
-//formChangeAvatar.addEventListener("submit", () => {renderUserAvatar(linkChangeAvatar.value);  closePopup(popupChangeAvatar); });
+function renderUserAvatar(avatar) {
+  elementUserAvatar.style.backgroundImage = `url(${avatar})`;
+}
+buttonAvatar.addEventListener("click", () => {
+  formChangeAvatar.reset();
+  disableSubmitButton(buttonSubmitChangeAvatar);
+  openPopup(popupChangeAvatar);
+});
+formChangeAvatar.addEventListener("submit", () => {
+  renderUserAvatar(linkChangeAvatar.value);
+  closePopup(popupChangeAvatar);
+});
 
 // 1 скрипт редактирования имени и рода занятий
 buttonEdit.addEventListener("click", editInput);
@@ -103,3 +115,88 @@ enableValidation({
   inputErrorClass: "form__input_type_error",
   errorClass: "form__input-error_active",
 });
+
+function renderPage() {
+  Promise.all([getUserInfo(), getElementServer()])
+    .then((result) => {
+      const user = result[0];
+      userID = user._id;
+      renderUserInfo(user.name, user.about);
+      renderUserAvatar(user.avatar);
+      const cards = result[1];
+      renderElements(cards);
+      cards.forEach((card) => {
+        cardsArray.push(card);
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+function renderElements(cardsArray) {
+  cardsArray.reverse().forEach((card) => {
+    createCard(
+      card,
+      userID,
+      deleteCardHandler(card._id),
+      handleClickLike(card)
+    );
+  });
+}
+
+window.addEventListener("DOMContentLoaded", renderPage);
+
+formEditProfile.addEventListener("submit", function () {
+  const initialText = buttonSubmitEditProfile.textContent;
+  buttonSubmitEditProfile.textContent = "Сохранение...";
+  postUserInfoToServer(inputUserName.value, inputUserDescription.value)
+    .then(() => {
+      closePopup(popupEditProfile);
+      renderUserInfo(inputUserName.value, inputUserDescription.value);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      buttonSubmitEditProfile.textContent = initialText;
+    });
+});
+
+function deleteCardHandler(cardID) {
+  return (evt) => {
+    const cardElement = evt.target.closest(".card");
+    deleteCardFromServer(cardID)
+      .then(() => {
+        deleteCardElement(cardElement);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+}
+
+function handleClickLike(card) {
+  return (evt) => {
+    const cardElement = evt.target.closest(".card");
+    if (isCardLikeButtonActive(cardElement)) {
+      deleteLikeFromCard(card._id)
+        .then((res) => {
+          console.log(res);
+          changeLikeStatus(cardElement, res.likes, userID);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      putLikeOnCard(card._id)
+        .then((res) => {
+          console.log(res);
+          changeLikeStatus(cardElement, res.likes, userID);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+}
