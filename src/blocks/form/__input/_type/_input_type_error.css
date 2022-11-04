@@ -1,7 +1,3 @@
 .form__input_type_error {
   border-bottom: 1px solid red;
 }
-
-.form__input_type_error:focus {
-  border-bottom: 2px solid red;
-}

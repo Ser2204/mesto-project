@@ -6,9 +6,9 @@
   background: rgba(255, 255, 255, 0.95);
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 450px) {
   .form {
     max-width: 238px;
-    width: 100%;
+    /* width: 100%;*/
   }
 }
