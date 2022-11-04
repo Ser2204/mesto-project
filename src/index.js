@@ -13,21 +13,15 @@ import {
   formAddCard,
   nameImagePopup,
   linkImagePopup,
-  elementContainer,
-  elementTemplate,
   buttonSubmitChangeAvatar,
-  popupLookCloser,
-  imageLookCloser,
-  nameLookCloser,
   popupChangeAvatar,
   formChangeAvatar,
   linkChangeAvatar,
   elementUserAvatar,
   buttonSubmitAddCard,
   buttonSubmitEditProfile,
+  elementContainer,
 } from "./components/utils";
-
-import { initialCards } from "./components/cards";
 
 import { openPopup, closePopup } from "./components/modal";
 
@@ -38,15 +32,31 @@ import {
 } from "./components/validate";
 
 import {
-  //renderElement,
-  //likeElement,
-  //deleteElement,
   createCard,
-  //viewCard,
+  changeLikeStatus,
+  isCardLikeButtonActive,
 } from "./components/card";
+
+import {
+  getInitialCards,
+  postElementServer,
+  getUserInfoServer,
+  postUserInfoServer,
+  deleteElementServer,
+  changeAvatarServer,
+  putLikeElementServer,
+  deleteLikeElementServer,
+} from "./components/api";
 
 let userID = "";
 const cardsArray = [];
+enableValidation({
+  formSelector: ".form",
+  inputSelector: ".form__input",
+  submitButtonSelector: ".form__submit",
+  inputErrorClass: "form__input_type_error",
+  errorClass: "form__input-error_active",
+});
 
 // функция обновления фото пользователя
 function renderUserAvatar(avatar) {
@@ -58,35 +68,51 @@ buttonAvatar.addEventListener("click", () => {
   openPopup(popupChangeAvatar);
 });
 formChangeAvatar.addEventListener("submit", () => {
-  renderUserAvatar(linkChangeAvatar.value);
-  closePopup(popupChangeAvatar);
+  const initialText = buttonSubmitChangeAvatar.textContent;
+  buttonSubmitChangeAvatar.textContent = "Сохранение...";
+  changeAvatarServer(linkChangeAvatar.value)
+    .then(() => {
+      closePopup(popupChangeAvatar);
+      renderUserAvatar(linkChangeAvatar.value);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      buttonSubmitChangeAvatar.textContent = initialText;
+    });
 });
 
-// 1 скрипт редактирования имени и рода занятий
 buttonEdit.addEventListener("click", editInput);
-// Получите значение полей jobInput и nameInput из свойства value
 function editInput() {
-  nameInput.value = nameTitle.textContent;
-  jobInput.value = jobTitle.textContent;
+  const userInfo = { name: nameTitle.textContent, about: jobTitle.textContent };
+  nameInput.value = userInfo.name;
+  jobInput.value = userInfo.about;
   openPopup(popupEditProfile);
-  enableValidation(nameInput, jobInput);
   disableSubmitButton(buttonSubmitEditProfile);
+}
+function renderUserInfo(name, about) {
+  nameTitle.textContent = name;
+  jobTitle.textContent = about;
 }
 // Обработчик «отправки» формы
 function saveEditInput(evt) {
   evt.preventDefault();
-  // Вставьте новые значения с помощью textContent
-  nameTitle.textContent = nameInput.value;
-  jobTitle.textContent = jobInput.value;
-  closePopup(popupEditProfile);
+  const initialText = buttonSubmitEditProfile.textContent;
+  buttonSubmitEditProfile.textContent = "Сохранение...";
+  postUserInfoServer(nameInput.value, jobInput.value)
+    .then(() => {
+      renderUserInfo(nameInput.value, jobInput.value);
+      closePopup(popupEditProfile);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      buttonSubmitEditProfile.textContent = initialText;
+    });
 }
-// Прикрепляем обработчик к форме
 formEdit.addEventListener("submit", saveEditInput);
-
-// добавим 6 мест при загрузке страницы
-initialCards.forEach(function (card) {
-  renderElement(card.name, card.link);
-});
 
 buttonAdd.addEventListener("click", function () {
   formAddCard.reset();
@@ -95,36 +121,38 @@ buttonAdd.addEventListener("click", function () {
 });
 
 formAddCard.addEventListener("submit", addNewCard);
-// добавить место по данным формы
 function addNewCard(evt) {
   evt.preventDefault();
-  renderElement(nameImagePopup.value, linkImagePopup.value);
-  formAddCard.reset();
-  closePopup(popupAddCard);
-}
+  const initialText = buttonSubmitAddCard.textContent;
+  buttonSubmitAddCard.textContent = "Сохранение...";
 
-function renderElement(nameCard, linkCard) {
-  const element = createCard(nameCard, linkCard);
-  elementContainer.prepend(element);
+  postElementServer(nameImagePopup.value, linkImagePopup.value)
+    .then((card) => {
+      createCard(
+        card,
+        userID,
+        deleteElementHandler(card._id),
+        handleClickLike(card)
+      );
+      closePopup(popupAddCard);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      buttonSubmitAddCard.textContent = initialText;
+    });
 }
-
-enableValidation({
-  formSelector: ".form",
-  inputSelector: ".form__input",
-  submitButtonSelector: ".form__submit",
-  inputErrorClass: "form__input_type_error",
-  errorClass: "form__input-error_active",
-});
 
 function renderPage() {
-  Promise.all([getUserInfo(), getElementServer()])
+  Promise.all([getUserInfoServer(), getInitialCards()])
     .then((result) => {
       const user = result[0];
       userID = user._id;
       renderUserInfo(user.name, user.about);
       renderUserAvatar(user.avatar);
       const cards = result[1];
-      renderElements(cards);
+      renderElement(cards);
       cards.forEach((card) => {
         cardsArray.push(card);
       });
@@ -134,12 +162,12 @@ function renderPage() {
     });
 }
 
-function renderElements(cardsArray) {
+function renderElement(cardsArray) {
   cardsArray.reverse().forEach((card) => {
     createCard(
       card,
       userID,
-      deleteCardHandler(card._id),
+      deleteElementHandler(card._id),
       handleClickLike(card)
     );
   });
@@ -147,28 +175,12 @@ function renderElements(cardsArray) {
 
 window.addEventListener("DOMContentLoaded", renderPage);
 
-formEditProfile.addEventListener("submit", function () {
-  const initialText = buttonSubmitEditProfile.textContent;
-  buttonSubmitEditProfile.textContent = "Сохранение...";
-  postUserInfoToServer(inputUserName.value, inputUserDescription.value)
-    .then(() => {
-      closePopup(popupEditProfile);
-      renderUserInfo(inputUserName.value, inputUserDescription.value);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-    .finally(() => {
-      buttonSubmitEditProfile.textContent = initialText;
-    });
-});
-
-function deleteCardHandler(cardID) {
+function deleteElementHandler(cardID) {
   return (evt) => {
-    const cardElement = evt.target.closest(".card");
-    deleteCardFromServer(cardID)
+    const element = evt.target.closest(".element");
+    deleteElementServer(cardID)
       .then(() => {
-        deleteCardElement(cardElement);
+        element.closest(".element").remove();
       })
       .catch((err) => {
         console.log(err);
@@ -178,21 +190,21 @@ function deleteCardHandler(cardID) {
 
 function handleClickLike(card) {
   return (evt) => {
-    const cardElement = evt.target.closest(".card");
-    if (isCardLikeButtonActive(cardElement)) {
-      deleteLikeFromCard(card._id)
+    const element = evt.target.closest(".element");
+    if (isCardLikeButtonActive(element)) {
+      deleteLikeElementServer(card._id)
         .then((res) => {
           console.log(res);
-          changeLikeStatus(cardElement, res.likes, userID);
+          changeLikeStatus(element, res.likes, userID);
         })
         .catch((err) => {
           console.log(err);
         });
     } else {
-      putLikeOnCard(card._id)
+      putLikeElementServer(card._id)
         .then((res) => {
           console.log(res);
-          changeLikeStatus(cardElement, res.likes, userID);
+          changeLikeStatus(element, res.likes, userID);
         })
         .catch((err) => {
           console.log(err);

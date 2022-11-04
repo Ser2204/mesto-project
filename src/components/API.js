@@ -13,13 +13,13 @@ function checkResponse(res) {
   Promise.reject(`Ошибка: ${res.status}`);
 }
 
-export function getElementServer() {
+export function getInitialCards() {
   return fetch(config.baseUrl + "/cards", {
     headers: config.headers,
   }).then((res) => checkResponse(res));
 }
 
-export function postNewElementServer(name, link) {
+export function postElementServer(name, link) {
   return fetch(config.baseUrl + "/cards", {
     method: "POST",
     headers: config.headers,
@@ -27,13 +27,6 @@ export function postNewElementServer(name, link) {
       name: name,
       link: link,
     }),
-  }).then((res) => checkResponse(res));
-}
-
-export function deleteElementServer(cardID) {
-  return fetch(config.baseUrl + `/cards/${cardID}`, {
-    method: "DELETE",
-    headers: config.headers,
   }).then((res) => checkResponse(res));
 }
 
@@ -55,7 +48,14 @@ export function postUserInfoServer(name, about) {
   }).then((res) => checkResponse(res));
 }
 
-export function changeUserAvatarServer(link) {
+export function deleteElementServer(cardID) {
+  return fetch(config.baseUrl + `/cards/${cardID}`, {
+    method: "DELETE",
+    headers: config.headers,
+  }).then((res) => checkResponse(res));
+}
+
+export function changeAvatarServer(link) {
   return fetch(config.baseUrl + "/users/me/avatar", {
     method: "PATCH",
     headers: config.headers,
@@ -65,14 +65,14 @@ export function changeUserAvatarServer(link) {
   }).then((res) => checkResponse(res));
 }
 
-export function putLikeElement(cardID) {
+export function putLikeElementServer(cardID) {
   return fetch(config.baseUrl + `/cards/likes/${cardID}`, {
     method: "PUT",
     headers: config.headers,
   }).then((res) => checkResponse(res));
 }
 
-export function deleteLikeElement(cardID) {
+export function deleteLikeElementServer(cardID) {
   return fetch(config.baseUrl + `/cards/likes/${cardID}`, {
     method: "DELETE",
     headers: config.headers,

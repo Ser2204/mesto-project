@@ -5,9 +5,14 @@ import {
   nameLookCloser,
   popupLookCloser,
 } from "./utils";
-import { openPopup, closePopup } from "./modal";
+import { openPopup } from "./modal";
 
-export function createCard(nameCard, linkCard) {
+export function createCard(
+  card,
+  userID,
+  deleteElementHandler,
+  likeTogglerHandler
+) {
   const newElement = elementTemplate.cloneNode(true);
   const imageElement = newElement.querySelector(".element__image");
   const likesCounterElement = newElement.querySelector(
@@ -17,32 +22,45 @@ export function createCard(nameCard, linkCard) {
     ".element__delete-button"
   );
   const likeButtonElement = newElement.querySelector(".element__like-button");
-  newElement.querySelector(".element__title").textContent = nameCard;
-  imageElement.src = linkCard;
-  imageElement.alt = nameCard;
+  newElement.querySelector(".element__title").textContent = card.name;
+  imageElement.setAttribute("src", card.link);
+  imageElement.setAttribute("alt", card.name);
+  likesCounterElement.textContent = card.likes.length;
+  elementContainer.prepend(newElement);
 
   imageElement.addEventListener("click", function () {
-    imageLookCloser.src = linkCard;
-    imageLookCloser.alt = nameCard;
-    nameLookCloser.textContent = nameCard;
+    imageLookCloser.setAttribute("src", card.link);
+    imageLookCloser.setAttribute("alt", card.name);
+    nameLookCloser.textContent = card.name;
     openPopup(popupLookCloser);
   });
-  likeButtonElement.addEventListener("click", likeElement);
-  deleteButtonElement.addEventListener("click", deleteElement);
 
-  return newElement;
+  if (card.owner._id === userID) {
+    deleteButtonElement.addEventListener("click", deleteElementHandler);
+  } else {
+    deleteButtonElement.remove();
+  }
+  if (likeElementUser(card.likes, userID)) {
+    likeButtonElement.classList.add("element__like-button_active");
+  }
+  likeButtonElement.addEventListener("click", likeTogglerHandler);
 }
 
-// 5 скрипт переключатель нравится / не нравится
-function deleteElement(evt) {
-  evt.target.closest(".element").remove();
+//export function deleteElement(element) {  element.closest(".element").remove();}
+function likeElementUser(likes, userID) {
+  return likes.find((likesOwner) => likesOwner._id === userID) !== undefined;
 }
-// 6 удаление карточки
-function likeElement(evt) {
-  evt.target.classList.toggle("element__like-button_active");
+export function isCardLikeButtonActive(element) {
+  const buttonElement = element.querySelector(".element__like-button");
+  return buttonElement.classList.contains("element__like-button_active");
 }
-// опубликовать новую карточку
-export function renderElement(nameCard, linkCard) {
-  const element = createCard(nameCard, linkCard);
-  elementContainer.prepend(element);
+export function changeLikeStatus(element, likes, userID) {
+  const buttonElement = element.querySelector(".element__like-button");
+  const CounterElement = element.querySelector(".element__like-counter");
+  CounterElement.textContent = likes.length;
+  if (likeElementUser(likes, userID)) {
+    buttonElement.classList.add("element__like-button_active");
+  } else {
+    buttonElement.classList.remove("element__like-button_active");
+  }
 }
