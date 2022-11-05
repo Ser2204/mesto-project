@@ -51,11 +51,7 @@ import {
 let userID = "";
 const cardsArray = [];
 enableValidation({
-  formSelector: ".form",
-  inputSelector: ".form__input",
-  submitButtonSelector: ".form__submit",
-  inputErrorClass: "form__input_type_error",
-  errorClass: "form__input-error_active",
+  configValidate,
 });
 
 // функция обновления фото пользователя
