@@ -27,8 +27,8 @@ import { openPopup, closePopup } from "./components/modal";
 
 import {
   enableValidation,
+  configValidate,
   disableSubmitButton,
-  enableSubmitButton,
 } from "./components/validate";
 
 import {
@@ -89,7 +89,8 @@ function editInput() {
   nameInput.value = userInfo.name;
   jobInput.value = userInfo.about;
   openPopup(popupEditProfile);
-  disableSubmitButton(buttonSubmitEditProfile);
+  disableSubmitButton(buttonSubmitEditProfile, configValidate);
+  //disableButton(buttonSubmitEditProfile);
 }
 function renderUserInfo(name, about) {
   nameTitle.textContent = name;
@@ -116,8 +117,9 @@ formEdit.addEventListener("submit", saveEditInput);
 
 buttonAdd.addEventListener("click", function () {
   formAddCard.reset();
-  disableSubmitButton(buttonSubmitAddCard);
   openPopup(popupAddCard);
+  disableSubmitButton(buttonSubmitAddCard, configValidate);
+  //disableButton(buttonSubmitAddCard);
 });
 
 formAddCard.addEventListener("submit", addNewCard);
