@@ -1,12 +1,3 @@
-export function disableSubmitButton(submitForm) {
-  submitForm.setAttribute("disabled", "");
-  submitForm.classList.add("form__submit_disabled");
-}
-export function enableSubmitButton(submitForm) {
-  submitForm.removeAttribute("disabled");
-  submitForm.classList.remove("form__submit_disabled");
-}
-
 const isValid = (formElement, inputElement, inputErrorClass, errorClass) => {
   if (inputElement.validity.patternMismatch) {
     inputElement.setCustomValidity(
@@ -58,27 +49,26 @@ const setEventListeners = (
   inputSelector,
   submitButtonSelector,
   inputErrorClass,
-  errorClass
+  errorClass,
+  inactiveButtonClass
 ) => {
   const inputList = Array.from(formElement.querySelectorAll(inputSelector));
   const submitForm = formElement.querySelector(submitButtonSelector);
-  toggleButtonState(inputList, submitForm);
+  toggleButtonState(inputList, submitForm, inactiveButtonClass);
   inputList.forEach((inputElement) => {
     inputElement.addEventListener("input", () => {
       isValid(formElement, inputElement, inputErrorClass, errorClass);
-      toggleButtonState(inputList, submitForm);
+      toggleButtonState(inputList, submitForm, inactiveButtonClass);
     });
   });
 };
-
-const toggleButtonState = (inputList, submitForm) => {
+const toggleButtonState = (inputList, submitForm, inactiveButtonClass) => {
   if (hasInvalidInput(inputList)) {
-    disableSubmitButton(submitForm);
+    disableSubmitButton(submitForm, inactiveButtonClass);
   } else {
-    enableSubmitButton(submitForm);
+    enableSubmitButton(submitForm, inactiveButtonClass);
   }
 };
-
 const hasInvalidInput = (inputList) => {
   return inputList.some((inputElement) => {
     return !inputElement.validity.valid;
@@ -91,6 +81,7 @@ export const enableValidation = ({
   submitButtonSelector,
   inputErrorClass,
   errorClass,
+  inactiveButtonClass,
 }) => {
   const formList = Array.from(document.querySelectorAll(formSelector));
   formList.forEach((formElement) => {
@@ -102,7 +93,17 @@ export const enableValidation = ({
       inputSelector,
       submitButtonSelector,
       inputErrorClass,
-      errorClass
+      errorClass,
+      inactiveButtonClass
     );
   });
 };
+
+export function disableSubmitButton(submitForm, inactiveButtonClass) {
+  submitForm.setAttribute("disabled", "");
+  submitForm.classList.add(inactiveButtonClass);
+}
+export function enableSubmitButton(submitForm, inactiveButtonClass) {
+  submitForm.removeAttribute("disabled");
+  submitForm.classList.remove(inactiveButtonClass);
+}

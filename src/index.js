@@ -29,13 +29,9 @@ import {
 
 import { initialCards } from "./components/cards";
 
-import { openPopup, closePopup } from "./components/modal";
+import { openPopup, closePopup, disableButton } from "./components/modal";
 
-import {
-  enableValidation,
-  disableSubmitButton,
-  enableSubmitButton,
-} from "./components/validate";
+import { enableValidation } from "./components/validate";
 
 import {
   //renderElement,
@@ -45,25 +41,17 @@ import {
   //viewCard,
 } from "./components/card";
 
-// функция обновления фото пользователя
-//function renderUserAvatar(avatar) {elementUserAvatar.style.backgroundImage = `url(${avatar})`; }
-//buttonAvatar.addEventListener("click", () => {formChangeAvatar.reset(); disableSubmitButton(buttonSubmitChangeAvatar);   openPopup(popupChangeAvatar);});
-//formChangeAvatar.addEventListener("submit", () => {renderUserAvatar(linkChangeAvatar.value);  closePopup(popupChangeAvatar); });
-
 // 1 скрипт редактирования имени и рода занятий
 buttonEdit.addEventListener("click", editInput);
-// Получите значение полей jobInput и nameInput из свойства value
 function editInput() {
   nameInput.value = nameTitle.textContent;
   jobInput.value = jobTitle.textContent;
   openPopup(popupEditProfile);
-  enableValidation(nameInput, jobInput);
-  disableSubmitButton(buttonSubmitEditProfile);
+  disableButton(buttonSubmitEditProfile);
 }
 // Обработчик «отправки» формы
 function saveEditInput(evt) {
   evt.preventDefault();
-  // Вставьте новые значения с помощью textContent
   nameTitle.textContent = nameInput.value;
   jobTitle.textContent = jobInput.value;
   closePopup(popupEditProfile);
@@ -78,12 +66,11 @@ initialCards.forEach(function (card) {
 
 buttonAdd.addEventListener("click", function () {
   formAddCard.reset();
-  disableSubmitButton(buttonSubmitAddCard);
   openPopup(popupAddCard);
+  disableButton(buttonSubmitAddCard);
 });
 
 formAddCard.addEventListener("submit", addNewCard);
-// добавить место по данным формы
 function addNewCard(evt) {
   evt.preventDefault();
   renderElement(nameImagePopup.value, linkImagePopup.value);
@@ -102,4 +89,5 @@ enableValidation({
   submitButtonSelector: ".form__submit",
   inputErrorClass: "form__input_type_error",
   errorClass: "form__input-error_active",
+  inactiveButtonClass: "form__submit_disabled",
 });
