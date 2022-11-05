@@ -28,12 +28,3 @@ function closeOverlay(evt) {
     closePopup(evt.currentTarget);
   }
 }
-export function disableButton(buttonElement) {
-  buttonElement.setAttribute("disabled", "");
-  buttonElement.classList.add("form__submit_disabled");
-}
-
-export function enableButton(buttonElement) {
-  buttonElement.removeAttribute("disabled");
-  buttonElement.classList.remove("form__submit_disabled");
-}

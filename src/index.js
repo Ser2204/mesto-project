@@ -29,17 +29,15 @@ import {
 
 import { initialCards } from "./components/cards";
 
-import { openPopup, closePopup, disableButton } from "./components/modal";
-
-import { enableValidation } from "./components/validate";
+import { openPopup, closePopup } from "./components/modal";
 
 import {
-  //renderElement,
-  //likeElement,
-  //deleteElement,
-  createCard,
-  //viewCard,
-} from "./components/card";
+  enableValidation,
+  configValidate,
+  disableSubmitButton,
+} from "./components/validate";
+
+import { createCard } from "./components/card";
 
 // 1 скрипт редактирования имени и рода занятий
 buttonEdit.addEventListener("click", editInput);
@@ -47,7 +45,8 @@ function editInput() {
   nameInput.value = nameTitle.textContent;
   jobInput.value = jobTitle.textContent;
   openPopup(popupEditProfile);
-  disableButton(buttonSubmitEditProfile);
+  disableSubmitButton(buttonSubmitEditProfile, configValidate);
+  //disableButton(buttonSubmitEditProfile);
 }
 // Обработчик «отправки» формы
 function saveEditInput(evt) {
@@ -67,7 +66,8 @@ initialCards.forEach(function (card) {
 buttonAdd.addEventListener("click", function () {
   formAddCard.reset();
   openPopup(popupAddCard);
-  disableButton(buttonSubmitAddCard);
+  disableSubmitButton(buttonSubmitAddCard, configValidate);
+  //disableButton(buttonSubmitAddCard);
 });
 
 formAddCard.addEventListener("submit", addNewCard);
@@ -84,10 +84,5 @@ function renderElement(nameCard, linkCard) {
 }
 
 enableValidation({
-  formSelector: ".form",
-  inputSelector: ".form__input",
-  submitButtonSelector: ".form__submit",
-  inputErrorClass: "form__input_type_error",
-  errorClass: "form__input-error_active",
-  inactiveButtonClass: "form__submit_disabled",
+  configValidate,
 });
