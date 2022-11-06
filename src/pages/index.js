@@ -1,4 +1,4 @@
-import "./pages/index.css";
+import "./index.css";
 import {
   buttonEdit,
   buttonAvatar,
@@ -21,21 +21,23 @@ import {
   buttonSubmitAddCard,
   buttonSubmitEditProfile,
   elementContainer,
-} from "./components/utils";
+  renderLoading,
+  returnRenderLoading,
+} from "../components/utils";
 
-import { openPopup, closePopup } from "./components/modal";
+import { openPopup, closePopup } from "../components/modal";
 
 import {
   enableValidation,
   configValidate,
   disableSubmitButton,
-} from "./components/validate";
+} from "../components/validate";
 
 import {
   createCard,
   changeLikeStatus,
   isCardLikeButtonActive,
-} from "./components/card";
+} from "../components/card";
 
 import {
   getInitialCards,
@@ -46,7 +48,7 @@ import {
   changeAvatarServer,
   putLikeElementServer,
   deleteLikeElementServer,
-} from "./components/api";
+} from "../components/api";
 
 let userID = "";
 const cardsArray = [];
@@ -64,8 +66,8 @@ buttonAvatar.addEventListener("click", () => {
   openPopup(popupChangeAvatar);
 });
 formChangeAvatar.addEventListener("submit", () => {
-  const initialText = buttonSubmitChangeAvatar.textContent;
-  buttonSubmitChangeAvatar.textContent = "Сохранение...";
+  renderLoading(buttonSubmitChangeAvatar);
+  //const initialText = buttonSubmitChangeAvatar.textContent;   buttonSubmitChangeAvatar.textContent = "Сохранение...";
   changeAvatarServer(linkChangeAvatar.value)
     .then(() => {
       closePopup(popupChangeAvatar);
@@ -75,28 +77,26 @@ formChangeAvatar.addEventListener("submit", () => {
       console.log(err);
     })
     .finally(() => {
-      buttonSubmitChangeAvatar.textContent = initialText;
+      returnRenderLoading(buttonSubmitChangeAvatar);
     });
 });
 
-buttonEdit.addEventListener("click", editInput);
-function editInput() {
+buttonEdit.addEventListener("click", openEditProfilePopup);
+function openEditProfilePopup() {
   const userInfo = { name: nameTitle.textContent, about: jobTitle.textContent };
   nameInput.value = userInfo.name;
   jobInput.value = userInfo.about;
   openPopup(popupEditProfile);
   disableSubmitButton(buttonSubmitEditProfile, configValidate);
-  //disableButton(buttonSubmitEditProfile);
 }
 function renderUserInfo(name, about) {
   nameTitle.textContent = name;
   jobTitle.textContent = about;
 }
 // Обработчик «отправки» формы
-function saveEditInput(evt) {
+function submitEditProfileForm(evt) {
   evt.preventDefault();
-  const initialText = buttonSubmitEditProfile.textContent;
-  buttonSubmitEditProfile.textContent = "Сохранение...";
+  renderLoading(buttonSubmitEditProfile);
   postUserInfoServer(nameInput.value, jobInput.value)
     .then(() => {
       renderUserInfo(nameInput.value, jobInput.value);
@@ -106,23 +106,21 @@ function saveEditInput(evt) {
       console.log(err);
     })
     .finally(() => {
-      buttonSubmitEditProfile.textContent = initialText;
+      returnRenderLoading(buttonSubmitEditProfile);
     });
 }
-formEdit.addEventListener("submit", saveEditInput);
+formEdit.addEventListener("submit", submitEditProfileForm);
 
 buttonAdd.addEventListener("click", function () {
   formAddCard.reset();
   openPopup(popupAddCard);
   disableSubmitButton(buttonSubmitAddCard, configValidate);
-  //disableButton(buttonSubmitAddCard);
 });
 
 formAddCard.addEventListener("submit", addNewCard);
 function addNewCard(evt) {
   evt.preventDefault();
-  const initialText = buttonSubmitAddCard.textContent;
-  buttonSubmitAddCard.textContent = "Сохранение...";
+  renderLoading(buttonSubmitAddCard);
 
   postElementServer(nameImagePopup.value, linkImagePopup.value)
     .then((card) => {
@@ -138,7 +136,7 @@ function addNewCard(evt) {
       console.log(err);
     })
     .finally(() => {
-      buttonSubmitAddCard.textContent = initialText;
+      returnRenderLoading(buttonSubmitAddCard);
     });
 }
 
@@ -151,9 +149,7 @@ function renderPage() {
       renderUserAvatar(user.avatar);
       const cards = result[1];
       renderElement(cards);
-      cards.forEach((card) => {
-        cardsArray.push(card);
-      });
+      //cards.forEach((card) => {        cardsArray.push(card);      });
     })
     .catch((err) => {
       console.log(err);

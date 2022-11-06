@@ -57,3 +57,13 @@ export const buttonLookCloser = popupLookCloser.querySelector(
 export const buttonCloseLook = popupLookCloser.querySelector(
   "#popup__close_look-closer"
 );
+
+export function renderLoading(submitForm) {
+  const initialText = submitForm.textContent;
+  submitForm.textContent = "Сохранение...";
+}
+
+export function returnRenderLoading(submitForm) {
+  const initialText = submitForm.textContent;
+  submitForm.textContent = "Сохранение";
+}

@@ -56,8 +56,8 @@ export function isCardLikeButtonActive(element) {
 }
 export function changeLikeStatus(element, likes, userID) {
   const buttonElement = element.querySelector(".element__like-button");
-  const CounterElement = element.querySelector(".element__like-counter");
-  CounterElement.textContent = likes.length;
+  const сounterElement = element.querySelector(".element__like-counter");
+  сounterElement.textContent = likes.length;
   if (likeElementUser(likes, userID)) {
     buttonElement.classList.add("element__like-button_active");
   } else {
