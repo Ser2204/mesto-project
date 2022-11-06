@@ -65,11 +65,13 @@ const setEventListeners = (formElement, configValidate) => {
 };
 const toggleButtonState = (inputList, submitForm, configValidate) => {
   if (hasInvalidInput(inputList)) {
-    submitForm.setAttribute("disabled", "");
-    submitForm.classList.add(configValidate.inactiveButtonClass);
+    disableSubmitButton(submitForm, configValidate);
+    //submitForm.setAttribute("disabled", "");
+    //submitForm.classList.add(configValidate.inactiveButtonClass);
   } else {
-    submitForm.removeAttribute("disabled");
-    submitForm.classList.remove(configValidate.inactiveButtonClass);
+    enableSubmitButton(submitForm, configValidate);
+    //submitForm.removeAttribute("disabled");
+    //submitForm.classList.remove(configValidate.inactiveButtonClass);
   }
 };
 const hasInvalidInput = (inputList) => {
@@ -94,4 +96,7 @@ function disableSubmitButton(submitForm, configValidate) {
   submitForm.setAttribute("disabled", "");
   submitForm.classList.add(configValidate.inactiveButtonClass);
 }
-//export function enableSubmitButton(submitForm, configValidate) {  submitForm.removeAttribute("disabled");  submitForm.classList.remove(configValidate.inactiveButtonClass);}
+function enableSubmitButton(submitForm, configValidate) {
+  submitForm.removeAttribute("disabled");
+  submitForm.classList.remove(configValidate.inactiveButtonClass);
+}
