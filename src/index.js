@@ -60,7 +60,7 @@ function renderUserAvatar(avatar) {
 }
 buttonAvatar.addEventListener("click", () => {
   formChangeAvatar.reset();
-  disableSubmitButton(buttonSubmitChangeAvatar);
+  disableSubmitButton(buttonSubmitChangeAvatar, configValidate);
   openPopup(popupChangeAvatar);
 });
 formChangeAvatar.addEventListener("submit", () => {
